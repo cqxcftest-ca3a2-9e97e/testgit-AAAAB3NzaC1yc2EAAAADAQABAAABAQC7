@@ -3,8 +3,7 @@ package com.forte.runtime;
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
-import com.forte.hlw.imagefs.facade.FileServiceFacade;
-import com.forte.hlw.imagefs.facade.bean.FileEntity;
+
 import com.forte.runtime.spring.AppContextConfig;
 import com.forte.runtime.util.MD5Util;
 import org.slf4j.Logger;
@@ -27,9 +26,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * Created by wangbin on 2016/10/14.
  */
-@Component
+//@Component
 public class FileServiceClient {
-    private FileServiceFacade fileServiceFacade;
+    /*private FileServiceFacade fileServiceFacade;
     private ReferenceConfig<FileServiceFacade> refer;
     private AtomicBoolean initialized = new AtomicBoolean(false);
     @Autowired
@@ -53,7 +52,7 @@ public class FileServiceClient {
             ApplicationConfig appCfg;
             try {
                 appCfg = new ApplicationConfig();
-                appCfg.setName(AppContextConfig.getAppName());/**/
+                appCfg.setName(AppContextConfig.getAppName());*//**//*
                 refer = new ReferenceConfig();
                 refer.setInterface(FileServiceFacade.class);
                 refer.setVersion(AppContextConfig.get("fileService.facade.version", "1.0"));
@@ -104,7 +103,7 @@ public class FileServiceClient {
         return file;
     }
 
-    /**
+    *//**
      *
      * @param fileName
      * @param width
@@ -113,11 +112,11 @@ public class FileServiceClient {
      * @param type 1 像素缩放，2 按比例
      * @return
      * @throws IOException
-     */
+     *//*
     public byte[] thumbnail(String fileName,int width,int height,String format,String quality,int type) throws IOException {
-        /*if (initialized.compareAndSet(false, true)) {
+        *//*if (initialized.compareAndSet(false, true)) {
             init();
-        }*/
+        }*//*
         return getFileServiceFacade().thumbnail(fileName, width, height, format, quality, type);
     }
 
@@ -148,5 +147,5 @@ public class FileServiceClient {
             outputStream.write(buffer, 0, length);
         }
     }
-
+*/
 }

@@ -3,7 +3,7 @@ package com.forte.runtime.startup;
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
-import com.forte.configure.facade.ConfigureLoadFacade;
+//import com.forte.configure.facade.ConfigureLoadFacade;
 import com.forte.runtime.bean.ConfigCenterRequest;
 import com.forte.runtime.spring.AppContextConfig;
 import com.forte.runtime.util.HttpRequestHelper;
@@ -23,20 +23,20 @@ public class RemoteConfigInfoImpl implements StartUpExecutor {
     private static Logger logger = LoggerFactory.getLogger(RemoteConfigInfoImpl.class);
 
     //@Autowired
-    private ConfigureLoadFacade queryConfigFacade;
+    //private ConfigureLoadFacade queryConfigFacade;
     //private ApplicationConfig appCfg;
-    private ReferenceConfig<ConfigureLoadFacade> refer;
+    //private ReferenceConfig<ConfigureLoadFacade> refer;
     //private RegistryConfig reg;
     public RemoteConfigInfoImpl(){
-        /*if("configure".equals(AppContextConfig.get("app.name"))){
+        if("scm".equalsIgnoreCase(AppContextConfig.get("app.name"))){
             return;
-        }*/
+        }
         logger.info("init-dubbo-config.........");
         ApplicationConfig appCfg;
         RegistryConfig reg;
         try {
-            appCfg = new ApplicationConfig();
-            appCfg.setName(AppContextConfig.get("app.name"));/**/
+            /*appCfg = new ApplicationConfig();
+            appCfg.setName(AppContextConfig.get("app.name"));*//**//*
             refer = new ReferenceConfig();
             refer.setInterface(ConfigureLoadFacade.class);
             refer.setVersion(AppContextConfig.get("config.facade.version","1.0"));
@@ -50,7 +50,7 @@ public class RemoteConfigInfoImpl implements StartUpExecutor {
             //reg.setGroup("*");
             reg.setId("configRegistry");
             refer.setRegistry(reg);
-            queryConfigFacade = refer.get();
+            queryConfigFacade = refer.get();*/
         }catch (Exception ex){
             logger.warn("get-dubbo-configFacade-error:{}",ex.getMessage());
         }finally {
@@ -59,7 +59,7 @@ public class RemoteConfigInfoImpl implements StartUpExecutor {
             //config = null;
             reg = null;
         }
-        logger.info("init-dubbo-config-done,ConfigureLoadFacade is "+(queryConfigFacade==null?"null":"not null"));
+        //logger.info("init-dubbo-config-done,ConfigureLoadFacade is "+(queryConfigFacade==null?"null":"not null"));
     }
     @Override
     public void execute() {
@@ -78,13 +78,13 @@ public class RemoteConfigInfoImpl implements StartUpExecutor {
         map.put("owner",system);
         map.put("env",env);
         String strlist = "";
-        if(queryConfigFacade !=null){
+        /*if(queryConfigFacade !=null){
             strlist = queryConfigFacade.loadSysConfigs(system,env);
             refer.destroy();
             refer = null;
-            /*appCfg.*/
+            *//*appCfg.*//*
             logger.debug("==============>load system-configs-from-dubbo-refer:\n{}",strlist);
-        }else {
+        }else */{
             strlist = HttpRequestHelper.httpPost(configCenter, map, "application/json");
             logger.debug("--------------->response-from-configCenter-http-req:\n" + strlist);
         }

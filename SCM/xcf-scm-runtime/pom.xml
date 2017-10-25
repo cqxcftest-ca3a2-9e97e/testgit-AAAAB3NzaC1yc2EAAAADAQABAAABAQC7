@@ -24,7 +24,7 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
+		<!--<dependency>
 			<groupId>com.forte.configure</groupId>
 			<artifactId>forte-configure-facade</artifactId>
 			<version>1.0-SNAPSHOT</version>
@@ -33,7 +33,7 @@
 			<groupId>com.forte.hlw</groupId>
 			<artifactId>image-fs-facade</artifactId>
 			<version>1.0-SNAPSHOT</version>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
