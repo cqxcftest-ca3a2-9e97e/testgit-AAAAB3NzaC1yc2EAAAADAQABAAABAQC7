@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/test")
 public class TestConctroller {
+
     @Autowired
     private HelloFacadeImpl helloFacade;
     private static final Logger logger = LoggerFactory.getLogger(TestConctroller.class);
