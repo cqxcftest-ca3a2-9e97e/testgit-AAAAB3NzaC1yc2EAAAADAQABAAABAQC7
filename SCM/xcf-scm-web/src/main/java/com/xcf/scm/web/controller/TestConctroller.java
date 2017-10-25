@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by wangb on 2015/12/18.
+ *
+ *
  */
 @Controller
 @RequestMapping("/test")
