@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation=
+           "http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/cache
+        http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <!-- Enable annotation-driven caching. -->
+    <cache:annotation-driven/>
+
+    <bean id="cacheManager" class="org.apache.ignite.cache.spring.SpringCacheManager">
+        <property name="configuration" ref="igniteClientCfg" />
+    </bean>
+
+    <!--缓存示例(可设置多个)-->
+    <bean id="cacheA" class="org.apache.ignite.configuration.CacheConfiguration">
+        <property name="name" value="cache_recmd"/>
+        <property name="cacheMode" value="PARTITIONED"/><!-- partition -->
+        <property name="statisticsEnabled" value="true" />
+        <!--<property name="affinity">
+            <bean class="org.apache.ignite.cache.affinity.rendezvous.RendezvousAffinityFunction">
+                <property name="hashIdResolver" >
+                    <bean class="org.apache.ignite.cache.affinity.AffinityNodeAddressHashResolver"/>
+                </property>
+                <property name="partitions" value="280" />
+            </bean>
+        </property>-->
+        <property name="backups" value="0"/>
+        <!--<property name="writeSynchronizationMode" value="PRIMARY_SYNC"/>
+        <property name="atomicityMode" value="ATOMIC"/>
+        <property name="atomicWriteOrderMode" value="PRIMARY"/>
+        <property name="memoryMode" value="ONHEAP_TIERED"/>&lt;!&ndash; memory tire &ndash;&gt;
+        <property name="startSize" value="#{30 * 1024 * 1024}"/>
+        <property name="offHeapMaxMemory" value="#{512 * 1024 * 1024}"/>
+        <property name="swapEnabled" value="true"/>
+        <property name="evictionPolicy">
+            <bean class="org.apache.ignite.cache.eviction.lru.LruEvictionPolicy">
+                <property name="maxMemorySize" value="#{1024 * 1024 * 1024}"/>
+            </bean>
+        </property>
+        <property name="rebalanceMode" value="ASYNC"/>
+        <property name="rebalanceBatchSize" value="#{1024 * 1024}"/>
+        <property name="rebalanceThrottle" value="100"/>-->
+    </bean>
+
+    <!--ignite客户端进程配置-(单个)-->
+    <bean id="igniteClientCfg" class="org.apache.ignite.configuration.IgniteConfiguration" scope="singleton">
+        <property name="gridName" value="${cache.grid.name}"/>
+        <property name="clientMode" value="true"/>
+        <property name="peerClassLoadingEnabled" value="true" />
+        <property name="metricsLogFrequency" value="0"/><!-- 0 means disable metrics log -->
+        <!--<property name="deploymentMode" value="ISOLATED"/>-->
+        <property name="discoverySpi">
+            <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
+                <property name="localPort" value="47500"/>
+                <property name="localPortRange" value="10"/>
+                <property name="ipFinder">
+                    <bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder">
+                        <property name="shared" value="true"/>
+                        <property name="addresses">
+                            <list>
+                                <value>${cache.server.host-port}</value>
+                                <!--<value>172.95.65.142:47510..47520</value>-->
+                            </list>
+                        </property>
+                    </bean>
+                </property>
+                <property name="joinTimeout" value="60000"/>
+            </bean>
+        </property>
+        <property name="communicationSpi">
+            <bean class="org.apache.ignite.spi.communication.tcp.TcpCommunicationSpi">
+                <property name="socketWriteTimeout" value="30000"/>
+                <property name="connectTimeout" value="50000"/>
+            </bean>
+        </property>
+        <property name="failureDetectionTimeout" value="60000"/>
+        <property name="swapSpaceSpi">
+            <bean class="org.apache.ignite.spi.swapspace.file.FileSwapSpaceSpi">
+                <property name="baseDirectory" value="/data1/home/igni1.5/my/swp"/>
+            </bean>
+        </property>
+        <property name="cacheConfiguration">
+            <list>
+                <ref bean="cacheA"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>

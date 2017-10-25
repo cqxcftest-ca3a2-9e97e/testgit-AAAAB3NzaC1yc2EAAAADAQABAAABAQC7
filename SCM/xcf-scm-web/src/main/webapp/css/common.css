@@ -1,0 +1,118 @@
+/**
+ * Type       公共控件
+ * @file      common.css
+ * @author:   by liu.yana
+ * @update:   2016-08-30
+ *
+ */
+@charset "utf-8";
+*{margin: 0;padding: 0;list-style: none;outline:none!important;}
+/** 清除内外边距 **/
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
+dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
+pre, /* text formatting elements 文本格式元素 */
+form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */
+th, td /* table elements 表格元素  -webkit-user-select: none;该属性防止复制功能 */ {
+    margin: 0;
+    padding: 0;
+}
+textarea{resize : none;}
+body{ font-size:12px; height:100%;width: 100%;}
+html{width:100%;height:100%;}
+/** 设置默认字体 **/
+body,
+button, input, select, textarea /* for ie */ {
+    font-family: 'Microsoft YaHei';
+    font-size: 14px;
+}
+button[disabled], button[disabled]:hover,button[disabled]:active{
+    padding: 0px 20px;
+    background: #fafafa;
+    border: 1px solid #ccc;
+    position: relative;
+    background: #fafafa;
+    cursor: default;
+    position: static;
+    color: #999;
+}
+address, cite, dfn, em, var { font-style: normal; } /* 灏嗘枩浣撴壎姝�*/
+code, kbd, pre, samp { font-family: courier new, courier, monospace; } /* 缁熶竴绛夊瀛椾綋 */
+
+/** 重置列表元素 **/
+ul, ol { list-style: none; }
+
+/** 重置文本格式元素 **/
+a { text-decoration: none; }
+a:hover { text-decoration: none; }
+/*点点点样式截断样式*/
+.ellips{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ellips_clip{white-space:nowrap;overflow:hidden;text-overflow:clip;}
+.ellips_line2{-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;}
+.ellips_line3{-webkit-line-clamp:3;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;}
+
+
+/** 重置表单元素 **/
+legend { color: #000; } /* for ie6 */
+fieldset, img { border: 0; } /* img 搭车：让链接里的 img 无边框 */
+/** 重置表格元素 **/
+table { border-collapse: collapse; border-spacing: 0; }
+
+.clearfix{*zoom:1;}
+.clearfix:after{content:"";display:block;clear:both;height:0;font:0;overflow:hidden;}
+h1,h2,h3 {font-family:'Microsoft YaHei';line-height:1.5;}
+h2 {line-height:1.5;}
+img{ vertical-align:middle;}
+*{    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+html,body{width: 100%;
+    height: 100%;}
+h1,h2,h3,h4,h5,h6{font-weight: 500;line-height: 1.5;}
+a,input,button,a:hover,input:hover,button:hover{cursor: pointer;outline:none;}
+/*input,button{background: transparent;border:0px;}*/
+a:hover{text-decoration: none;}
+.fl{float: left;}
+.fr{float: right;}
+a{text-decoration: none;}
+.all,.frame-content{width: 100%;
+    height: 100%;}
+.row {
+
+    width: 100%;
+    height: auto;
+}
+.model-hearder{position: fixed; top: 0px; left: 0px; height: 50px; padding-top: 10px; width: 100%;z-index: 99; background: #ffffff; border-bottom: 1px solid #dddddd;}
+.content{width: 100%; height: 100%;}
+.nav{float: left; position: relative; width: 340px;  height: 100%;  overflow: scroll;  background: #f0f0f0; padding-top: 50px; }
+.nav li .active{background: blue; padding: 10px;}
+.nav li{padding: 10px; cursor: pointer; border-bottom: 1px solid #dddddd;}
+.content-right{padding:60px 20px 20px 20px ; height: 100%; overflow: auto;}
+.attention{ border-bottom: 1px solid #dddddd; padding: 20px;}
+.list-form{float:left; position: relative;}
+.list-label{float:left; width: 150px; line-height: 33px; padding-right: 10px; text-align: right;}
+.list-input{float: left; position: relative; width: 300px;}
+.list-input input{width: 100%; padding: 5px;}
+.search{float: right; cursor: pointer; padding: 5px 20px; border-radius: 5px; margin-top: 10px; border: 1px solid #DDDDDD;}
+.search-result{padding: 20px;}
+.did{background: #0000FF;color: #FFFFFF;}
+.btn-execute{padding: 5px 20px; border-radius: 2px; border: 0px;}
+.methods div{float: left; margin-left: 10px; padding: 5px 10px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

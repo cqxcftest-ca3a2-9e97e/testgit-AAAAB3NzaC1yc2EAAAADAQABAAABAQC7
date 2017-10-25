@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+        xsi:schemaLocation=
+       "http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/mvc
+    	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:property-placeholder system-properties-mode="OVERRIDE" />
+	<context:annotation-config/>
+	<!--<mvc:annotation-driven />-->
+	
+	<mvc:annotation-driven conversion-service="conversionService" />
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="*" />
+			<mvc:mapping path="/*" />
+			<mvc:mapping path="/*/*" />
+			<bean class="com.xcf.scm.web.interceptor.EnterInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+		<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	</bean>
+
+	<bean id="mappingJacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+				<value>text/json;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="byteArrayHttpMessageConverter"
+		class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
+	</bean>
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJacksonHttpMessageConverter" />
+				<ref bean="byteArrayHttpMessageConverter" />
+			</list>
+		</property>
+		<property name="webBindingInitializer">
+			<bean class="com.xcf.scm.web.converter.DateConverter" />
+		</property>
+	</bean>
+	
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
+
+	<bean id="tagDirective" class="com.xcf.scm.web.tag.TagDirective" />
+	
+	<bean id="paramDirective" class="com.xcf.scm.web.converter.CommonParamterDirective"/>
+	
+	<bean id="freemarkerConfiguration"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:freemarker.properties" />
+	</bean>
+    <bean id="freemarkerConfig"
+      class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">  
+	    <property name="templateLoaderPath" value="/WEB-INF/ftl/" />  
+	    <property name="freemarkerVariables">
+			<map>
+				<entry key="xml_escape" value-ref="fmXmlEscape" />
+				<entry key="tag_label" value-ref="tagDirective" />
+				<entry key="param" value-ref="paramDirective"/>
+			</map>
+		</property>
+	</bean> 	
+	
+	<bean id="viewResolver"  
+      class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">  
+	    <property name="cache" value="false" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".ftl" />
+		<property name="requestContextAttribute" value="rc" />		
+		<property name="contentType" value="text/html;charset=UTF-8"/>
+		<property name="exposeSpringMacroHelpers" value="true" />
+	</bean>
+    
+	<bean class="com.xcf.scm.web.interceptor.ExcepionLogInterceptor">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="NumberFormatException">error/system_error</prop>
+				<prop key="NullPointerException">error/biz_error</prop>
+				<prop key="AccessException">error/access_error</prop>
+			</props>
+		</property>
+		<property name="defaultErrorView" value="error/error" />
+		<property name="statusCodes">
+			<props>
+				<prop key="error/system_error">500</prop>
+				<prop key="error/biz_error">503</prop>
+				<prop key="error/error">501</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="maxUploadSize" value="104857600"/>
+		<property name="maxInMemorySize" value="4096"/>
+	</bean>
+</beans>

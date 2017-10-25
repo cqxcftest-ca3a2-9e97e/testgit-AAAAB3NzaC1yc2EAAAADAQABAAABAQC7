@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AcctAccountDO">
+
+	<!-- 新增 -->
+	<insert id="add" parameterType="com.xcf.scm.dal.model.AcctAccountDO">	
+		<![CDATA[
+		INSERT INTO ACCT_ACCOUNT(ACCT_ID,ACCT_NAME,ACCT_STATUS,CCY,PAY_STOP,RECEVIEPAY_STOP)
+VALUES(#{acctId,jdbcType=VARCHAR},#{acctName,jdbcType=VARCHAR},#{acctStatus,jdbcType=VARCHAR},#{ccy,jdbcType=VARCHAR},
+#{payStop,jdbcType=VARCHAR},#{receviepayStop,jdbcType=VARCHAR}) ]]>
+	</insert>
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"/wls/envconfig/mybatis-3-config.dtd">
+<!--"http://mybatis.org/dtd/mybatis-3-config.dtd"-->
+<!--离线情况，mybatis.org不识别，项目启动失败，
+   mybatis-3-config.dtd放在/wls/envconfig/目录
+-->
+<configuration>
+	<settings>
+		<setting name="lazyLoadingEnabled" value="false" />
+        <setting name="jdbcTypeForNull" value="VARCHAR" />
+	</settings>
+
+	<typeAliases>
+       <typeAlias type="com.xcf.scm.dal.model.AcctAccountDO" alias="acctAccountDO"/>
+	</typeAliases>
+    <typeHandlers>
+		<typeHandler jdbcType="CLOB" javaType="String"
+			handler="org.apache.ibatis.type.ClobTypeHandler" />
+		<typeHandler jdbcType="CHAR" javaType="String"
+			handler="org.apache.ibatis.type.BooleanTypeHandler" />
+	</typeHandlers>
+</configuration>

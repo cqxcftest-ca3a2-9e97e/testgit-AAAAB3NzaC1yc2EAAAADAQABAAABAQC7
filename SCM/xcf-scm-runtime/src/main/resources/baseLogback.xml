@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<included>
+	<property resource="env.properties" />
+   	<property file="/wls/envconfig/${app.name}/env.properties" />
+	<!--日志文件存入路径-->
+	<property name="PROJECT_NAME" value="${app.name}" />
+	<!-- 存放日志文件的路径 -->
+
+	<property name="LOG_HOME" value="/wls/applogs/rtlog/${PROJECT_NAME}" />
+	<property name="LOG_HOME_ERROR" value="${LOG_HOME}" />
+	<property name="LOG_HOME_BIZ" value="${LOG_HOME}" />
+	<property name="LOG_HOME_SERVICE" value="${LOG_HOME}" />
+	<property name="LOG_HOME_COMMON" value="${LOG_HOME}" />
+	<property name="LOG_HOME_SQL" value="${LOG_HOME}" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern> 
+       			 %d{yyyy-MM-dd HH:mm:ss.SSS} [${app.name}] [%thread] %-5level %logger{36} - %msg%n
+     	 	</pattern>
+   	 	</encoder> 
+    </appender>
+ 
+  	<!-- queue -->
+    <appender name="commonRolling"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+   		 <file>${LOG_HOME_COMMON}/forte-common.log</file>
+   		 <rollingPolicy  class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME_COMMON}/forte-common-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			 <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<MaxFileSize>10MB</MaxFileSize>
+			 </TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	    <encoder>
+	      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [${app.name}] [%thread] %-5level %logger{36} - %msg%n</pattern>
+	    </encoder>
+  	</appender>
+    <!-- error -->
+    <appender name="errorRolling"  class="ch.qos.logback.core.rolling.RollingFileAppender" >
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+		  <level>ERROR</level>
+		  <onMatch>ACCEPT</onMatch>
+		  <onMismatch>DENY</onMismatch>
+		</filter>
+   		 <file>${LOG_HOME_ERROR}/forte-error.log</file>
+   		 <rollingPolicy  class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+  				<fileNamePattern>${LOG_HOME_ERROR}/forte_error-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+  		  		<maxHistory>30</maxHistory>
+  		   		 <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				    <MaxFileSize>10MB</MaxFileSize>
+				 </TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	    <encoder>
+	      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [${app.name}] [%thread] %-5level %logger{36} - %msg%n</pattern>
+	    </encoder>
+    </appender>
+	<!-- biz log -->
+	<appender name="bizRolling"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME_BIZ}/forte-biz.log</file>
+		<rollingPolicy  class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME_BIZ}/forte-biz-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<MaxFileSize>10MB</MaxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [${app.name}] [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- impl -->
+	<appender name="serviceRolling"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME_SERVICE}/forte-service.log</file>
+		<rollingPolicy  class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME_SERVICE}/forte-service-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<MaxFileSize>10MB</MaxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [${app.name}] [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- sqlRolling -->
+	<!--<appender name="sqlRolling"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME_SQL}/forte-sql.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME_SQL}/forte-%d{yyyy-MM-dd}.%i.zip
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<MaxFileSize>100MB</MaxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>-->
+	
+	<!-- runtime -->
+	<logger name="com.forte.runtime" level="ERROR" >
+	   <appender-ref ref="commonRolling"/>
+	</logger>
+	<logger name="forte.error" level="INFO" >
+       <appender-ref ref="errorRolling" />
+   </logger>
+	<logger name="ch.qos.logback.core" level="ERROR">
+		<appender-ref ref="STDOUT" />
+	</logger>
+   <logger name="forte.common" level="INFO" >
+       <appender-ref ref="commonRolling" />
+   </logger>
+
+	<!--sql -->
+	<!--<logger name="forte.sql" level="DEBUG">
+		<appender-ref ref="sqlRolling" />
+	</logger>-->
+	
+</included>

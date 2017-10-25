@@ -1,0 +1,5 @@
+
+dao,sqlmapper生成命令：
+修改generatorConfig.xml 的classPathEntry location为本地文件目录
+cd xcf-scm-dal
+mvn mybatis-generator:generate

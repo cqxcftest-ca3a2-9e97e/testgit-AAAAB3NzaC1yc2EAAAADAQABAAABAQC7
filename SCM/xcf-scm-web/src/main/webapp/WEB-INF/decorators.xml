@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/decorators">
+    
+    <decorator name="basic-console" page="base-console.jsp">
+        <pattern>/dubbo/*</pattern>
+    </decorator>
+    <decorator name="login-console" page="login.jsp">
+        <pattern>/</pattern>
+        <pattern></pattern>
+        <pattern>/index.html</pattern>
+        <pattern>/index.htm</pattern>
+    </decorator>
+	
+  	<excludes>
+    	<pattern>/*/*/*Dialog*</pattern>
+        <pattern>/js/ueditor/third-party/*/*</pattern>
+        <pattern>/img/**</pattern>
+        <pattern>/ftl/error/biz_error.jsp</pattern>
+        <pattern>/js/ueditor/third-party/zeroclipboard/ZeroClipboard.swf</pattern>
+  	</excludes>
+
+</decorators>
